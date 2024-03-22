@@ -3,24 +3,20 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  let cuenta = 0
   const addCountButtonHandler = () => {
-    setCount(count + 1)
+    cuenta ++
+    console.log(cuenta)
+
   }
 
-  useEffect(() => {
-    console.log(count, "useEffect")
-    if ( count < 100 ) {
-      setCount(count +1)
-    }
-  }, [count])
-
+  // este es un comentario de ejemplo para tener algún cambio y poder comitearlo
   return (
     <>
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => addCountButtonHandler()}>
-          count is {count}
+          count is {cuenta}
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
