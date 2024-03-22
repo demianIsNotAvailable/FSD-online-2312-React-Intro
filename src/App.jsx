@@ -10,10 +10,11 @@ function App() {
 
   }
 
-  // este es un comentario de ejemplo para tener algún cambio y poder comitearlo
+ 
   return (
     <>
       <h1>Vite + React</h1>
+      <h2>Este es el subtítulo</h2>
       <div className="card">
         <button onClick={() => addCountButtonHandler()}>
           count is {cuenta}
