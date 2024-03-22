@@ -3,22 +3,38 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  let cuenta = 0
-  const addCountButtonHandler = () => {
-    cuenta ++
-    console.log(cuenta)
+  const [inputData, setInputData] = useState("")
 
+  const addCountButtonHandler = () => {
+    setCount(count + 1)
   }
 
- 
+  const inputHandler = (event) => {
+    setInputData(event.target.value)
+    console.log(inputData, "yo soy input data")
+  }
+
+  const logearInputData = () => {
+    console.log(inputData)
+  }
+
+  useEffect(() => {
+    console.log(count)
+  }, [count])
+
+  useEffect(
+    logearInputData
+    , [inputData, count])
+
   return (
     <>
       <h1>Vite + React</h1>
       <h2>Este es el subtítulo</h2>
       <div className="card">
-        <button onClick={() => addCountButtonHandler()}>
-          count is {cuenta}
+        <button onClick={addCountButtonHandler}>
+          count is {count}
         </button>
+        <input type="text" name="inputDePrueba" onChange={(event) => inputHandler(event)}></input>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
