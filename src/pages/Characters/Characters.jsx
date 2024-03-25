@@ -1,22 +1,29 @@
 import { useState } from "react"
-import { bringAllCharacters } from "../../services/apiCalls"
+import { bringAllCharacters, bringCharacterById } from "../../services/apiCalls"
 import "./Characters.css"
+import { CharacterCard } from "../../components/CharacterCard/CharacterCard"
 
 export const Characters = () => {
     const [characters, setCharacters] = useState([])
-
     const bringCharacters = /*async*/ () => {
 
         // const apiResponse = await bringAllCharacters()
         // lógica que me convenga usar
 
         bringAllCharacters()
-        .then((apiResponse) => {
-            setCharacters(apiResponse.data.results)
-            console.log(apiResponse.data.results)
+        .then((res) => {
+            setCharacters(res)
+            console.log(res)
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error, "ups")
+        })
+    }
+
+    const characterCardClickHandler = (char) => {
+        bringCharacterById(char.id)
+        .then((res) => {
+            console.log(res)
         })
     }
 
@@ -28,7 +35,10 @@ export const Characters = () => {
             <ol>
                 {characters.map((char) => {
                     return (
-                        <li key={char.id}>{char.name}</li>
+                        <CharacterCard key={char.id} 
+                        character={char}
+                        handleClick={() => characterCardClickHandler(char)}
+                        />
                     )
                 })}       
             </ol>

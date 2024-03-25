@@ -21,5 +21,11 @@ export const loginCall = async () => {
 export const bringAllCharacters = async () => {
     const res = await axios.get(`${API_URL}/character`, /*headers*/)
 
-    return res
+    return res.data.results
+}
+
+export const bringCharacterById = async (id) => {
+    const res = await axios.get(`${API_URL}/character/${id}`)
+
+    return res.data
 }
