@@ -18,7 +18,7 @@ export const Home = () => {
     const inputHandler = (event) => {
       setInputData(event.target.value);
     };
-  
+
 
     // useEffects
     useEffect(() => {}, [count]);

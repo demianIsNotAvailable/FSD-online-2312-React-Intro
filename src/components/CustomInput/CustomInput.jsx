@@ -1,5 +1,4 @@
 
-
 export const CustomInput = ({typeProp, nameProp, placeholderProp, handlerProp}) => { // props, properties, propiedades, se reciben como un objeto
     
 
