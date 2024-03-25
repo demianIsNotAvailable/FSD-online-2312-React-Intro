@@ -1,7 +1,9 @@
+import { useState } from "react"
 import { bringAllCharacters } from "../../services/apiCalls"
 import "./Characters.css"
 
 export const Characters = () => {
+    const [characters, setCharacters] = useState([])
 
     const bringCharacters = /*async*/ () => {
 
@@ -10,6 +12,7 @@ export const Characters = () => {
 
         bringAllCharacters()
         .then((apiResponse) => {
+            setCharacters(apiResponse.data.results)
             console.log(apiResponse.data.results)
         })
         .catch((error) => {
@@ -22,6 +25,13 @@ export const Characters = () => {
         <div className="characters-design">
             HOLA, AQUI HABRA PERSONAJES
             <button onClick={bringCharacters}>TRAER PERSONAJES</button>
+            <ol>
+                {characters.map((char) => {
+                    return (
+                        <li key={char.id}>{char.name}</li>
+                    )
+                })}       
+            </ol>
         </div>
     )
 }
