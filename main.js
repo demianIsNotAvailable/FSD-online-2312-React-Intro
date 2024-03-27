@@ -1,17 +1,14 @@
-const funcion = () => 5 < 999
-
-
-console.log(funcion())
-
-
-
-
 const estado = {
-
+    email: "email@email.com",
+    password: "contraseña SUPER secreta",
+    role: "el admin más admin de todos"
 }
 
-const inputData =
+const copia = {
+    ...estado,
+    tamaño: 7,
+    password: "la de antes no era segura"
+}
 
-estado.inputData = "patata"
 
-console.log(estado)
+console.log(copia)

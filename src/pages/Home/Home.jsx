@@ -2,35 +2,34 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 
-
 export const Home = () => {
-    const [count, setCount] = useState(0);
-    const [inputData, setInputData] = useState("");
-    const password = "contraseña secreta";
+  const [count, setCount] = useState(0);
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  });
 
-    const navigate = useNavigate()
-  
-    // handlers
-    const addCountButtonHandler = () => {
-      setCount(count + 1);
-    };
-  
-    const inputHandler = (event) => {
-      setInputData(event.target.value);
-    };
+  const navigate = useNavigate();
 
+  // handlers
+  const addCountButtonHandler = () => {
+    
+  };
 
-    // useEffects
-    useEffect(() => {}, [count]);
-  
-    useEffect(() => {
-      if (inputData === password) {
-        console.log("SON IGUALES!");
-        setCount(9999);
-        navigate("/login")
-      }
-    }, [inputData]);
-  
+  const inputHandler = (event) => {
+    setCredentials((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }));
+  };
+
+  // useEffects
+  useEffect(() => {}, [count]);
+
+  useEffect(() => {
+    console.log(credentials);
+  }, [credentials]);
+
   return (
     <>
       <h1>SOY HOME</h1>
@@ -38,16 +37,19 @@ export const Home = () => {
       <h2>Este es el subtítulo</h2>
       <div className="card">
         <button onClick={addCountButtonHandler}>count is {count}</button>
-        <input
-          type="text"
-          name="inputDePrueba"
-          onChange={(event) => inputHandler(event)}
-        ></input>
+        <h3>LOGIN</h3>
         <CustomInput
-        typeProp="email"
-        nameProp="emailInput"
-        placeholderProp="introduce tu email"
-        handlerProp={inputHandler} />
+          typeProp="email"
+          nameProp="email"
+          placeholderProp="introduce tu email"
+          handlerProp={inputHandler}
+        />
+        <CustomInput
+          typeProp="password"
+          nameProp="password"
+          placeholderProp=""
+          handlerProp={inputHandler}
+        />
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
