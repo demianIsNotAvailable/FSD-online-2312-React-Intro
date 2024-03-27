@@ -25,6 +25,7 @@ export const bringAllCharacters = async () => {
 }
 
 export const bringCharacterById = async (id) => {
+    // puedo preparar la información para enviar al servidor
     const res = await axios.get(`${API_URL}/character/${id}`)
 
     return res.data
