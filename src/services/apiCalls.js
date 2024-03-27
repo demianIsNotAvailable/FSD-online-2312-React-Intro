@@ -30,3 +30,9 @@ export const bringCharacterById = async (id) => {
 
     return res.data
 }
+
+
+// .get("url", {headers}(opcional))
+// .post("url", {body}, {headers})
+// .put("url", {body}, {headers})
+// .delete("url", {headers})
