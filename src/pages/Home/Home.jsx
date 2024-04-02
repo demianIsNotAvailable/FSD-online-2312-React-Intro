@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { CustomInput } from "../../components/CustomInput/CustomInput";
 
 export const Home = () => {
@@ -9,12 +8,7 @@ export const Home = () => {
     password: ""
   });
 
-  const navigate = useNavigate();
 
-  // handlers
-  const addCountButtonHandler = () => {
-    
-  };
 
   const inputHandler = (event) => {
     setCredentials((prevState) => ({
@@ -36,7 +30,7 @@ export const Home = () => {
       <h1>Vite + React</h1>
       <h2>Este es el subtítulo</h2>
       <div className="card">
-        <button onClick={addCountButtonHandler}>count is {count}</button>
+        <button onClick={bringProfileHandler}>Bring My Profile</button>
         <h3>LOGIN</h3>
         <CustomInput
           typeProp="email"

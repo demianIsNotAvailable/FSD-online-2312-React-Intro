@@ -3,14 +3,15 @@ import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { ButtonC } from "../../components/ButtonC/ButtonC";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
-import "./Login.css";
-import { loginCall } from "../../services/apiCalls";
+import { registerNewUserCall } from "../../services/apiCalls";
+import "./Register.css";
 
-export const Login = () => {
+export const Register = () => {
   const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
     email: "",
+    name: "",
     password: "",
   });
 
@@ -25,40 +26,35 @@ export const Login = () => {
     }));
   };
 
-  const loginMe = async () => {
-    //esta será la función que desencadenará el login...
-    const answer = await loginCall(credentials);
-    if (answer.data.token) {
-      //decodificamos el token...
-      const uDecodificado = decodeToken(answer.data.token);
+  const registerMe = async () => {
+    const answer = await registerNewUserCall(credentials);
 
-      const passport = {
-        token: answer.data.token,
-        decodificado: uDecodificado,
-      };
+    setMsg(answer.data.message);
 
-      console.log(passport);
-      //Guardaríamos passport bien en RDX o session/localStorage si no disponemos del primero
-      sessionStorage.setItem("passport", JSON.stringify(passport))
-      
-      setMsg(`${uDecodificado.name}, bienvenid@ de nuevo.`);
-
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+    if(answer.data.success){
+        setTimeout(()=> {
+            navigate("/login")
+        }, 2000)
     }
   };
 
   return (
-    <div className="login-container loginElementsDesign">
+    <div className="register-container registerElementsDesign">
       {msg === "" ? (
         <>
+          <CustomInput
+            typeProp={"text"}
+            nameProp={"name"}
+            handlerProp={(e) => inputHandler(e)}
+            placeholderProp={"escribe tu nombre"}
+          />
           <CustomInput
             typeProp={"email"}
             nameProp={"email"}
             handlerProp={(e) => inputHandler(e)}
             placeholderProp={"escribe tu e-mail"}
           />
+
           <CustomInput
             typeProp={"password"}
             nameProp={"password"}
@@ -67,15 +63,15 @@ export const Login = () => {
           />
 
           <ButtonC
-            title={"log me!"}
+            title={"register!"}
             className={"regularButtonClass"}
-            functionEmit={loginMe}
+            functionEmit={registerMe}
           />
         </>
       ) : (
         <div>{msg}</div>
       )}
-      <pre>{JSON.stringify(credentials, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(credentials, null, 2)}</pre> */}
     </div>
   );
 };

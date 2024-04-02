@@ -5,13 +5,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import "./Header.css";
 
 function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const location = useLocation()
-    console.log(location)
-    console.log(location.pathname, "usted está aquí")
+    // console.log(location)
+    // console.log(location.pathname, "usted está aquí")
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -20,17 +21,15 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <NavDropdown title="Despliégame!" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/characters">Characters</NavDropdown.Item>
-              <NavDropdown.Item >prueba</NavDropdown.Item>
+              <NavDropdown.Item href="/characters" className={location.pathname === "/characters" ? "elementTest" : ""}>Characters</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4" onClick={() => setIsLoggedIn(!isLoggedIn)}>
-                {!isLoggedIn
-                ? "Inicia Sesión"
-                : "Salir"
-
-                }
+              <NavDropdown.Item href="/login" className={location.pathname === "/login" ? "elementTest" : ""}>
+                Login
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/register" className={location.pathname === "/register" ? "elementTest" : ""}>
+                Register
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
