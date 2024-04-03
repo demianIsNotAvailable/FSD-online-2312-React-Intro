@@ -23,16 +23,17 @@ export const bringProfile = async (token) => {
     }
   }
   const res = await axios.get(`${API_URL}user`, config)
-  console.log(res, "bringProfile")
-  return res
+  return res.data
 }
 
-
-// export const bringAllCharacters = async () => {
-//     const res = await axios.get("https://rickandmortyapi.com/api/character", /*headers*/)
-
-//     return res
-// }
+export const updateProfile = async (data, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const res = await axios.put(`${API_URL}api/users/profile`, data, config)
+}
 
 export const bringAllCharacters = async () => {
   const res = await axios.get(`${API_RM_URL}/character` /*headers*/);

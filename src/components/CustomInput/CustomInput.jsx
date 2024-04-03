@@ -5,6 +5,8 @@ export const CustomInput = ({
   nameProp,
   placeholderProp,
   handlerProp,
+  value,
+  isDisabled
 }) => {
   // props, properties, propiedades, se reciben como un objeto
 
@@ -13,6 +15,8 @@ export const CustomInput = ({
       type={typeProp}
       name={nameProp}
       placeholder={placeholderProp}
+      value={value}
+      disabled={isDisabled}
       onChange={(e) => handlerProp(e)}
     />
   );

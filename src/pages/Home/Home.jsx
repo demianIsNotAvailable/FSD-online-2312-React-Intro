@@ -30,7 +30,7 @@ export const Home = () => {
       <h1>Vite + React</h1>
       <h2>Este es el subtítulo</h2>
       <div className="card">
-        <button onClick={bringProfileHandler}>Bring My Profile</button>
+        <button>Bring My Profile</button>
         <h3>LOGIN</h3>
         <CustomInput
           typeProp="email"

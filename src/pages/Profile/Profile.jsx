@@ -1,63 +1,94 @@
-import { useState } from "react"
-import { CustomInput } from "../../components/CustomInput/CustomInput"
-import { bringProfile } from "../../services/apiCalls"
+import { useEffect, useState } from "react";
+import { CustomInput } from "../../components/CustomInput/CustomInput";
+import { bringProfile } from "../../services/apiCalls";
+import { inputValidator } from "../../utils/validators";
+import BootstrapModal from "../../components/BootstrapModal/BootstrapModal";
 
 export const Profile = () => {
-    const [updateData, setUpdateData] = useState({
-        name: "",
-        email: "",
-        lastname: ""
-    })
+  const [profileData, setProfileData] = useState({
+    name: "",
+    email: "",
+    role: "",
+  });
+  const [isEditing, setIsEditing] = useState(false);
 
-    const myPassport = JSON.parse(sessionStorage.getItem("passport"))
-    const token = myPassport.token
-    console.log(token, "estoy viendo un token, verdad?")
-  
-    // handlers
-    const bringProfileHandler = async () => {
-      try {
-        const profileData = await bringProfile(token)
-        setUpdateData(profileData)
-      }
-      catch (error) {
-        console.log(error)
-      }
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const myPassport = JSON.parse(sessionStorage.getItem("passport"));
+  const token = myPassport.token;
+
+  const inputHandler = (e) => {
+    setProfileData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const myProfileData = await bringProfile(token);
+      setProfileData(myProfileData);
+    };
+    fetchProfile();
+  }, []);
+
+  useEffect(() => {
+    console.log(profileData, "bringProfile");
+  }, [profileData]);
+
+  const updateProfileHandler = () => {
+    if (
+      !inputValidator(profileData.name, "name") ||
+      !inputValidator(profileData.email, "email")
+    ) {
+      console.log("nombre o email no válidos");
+      setErrorMessage("No se pueden actualizar los datos");
+      return;
     }
-
-    const inputHandler = (e) => {
-        setUpdateData((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }))
+    try {
+      updateProfile(profileData, token);
+    } catch (err) {
+      console.log(err);
     }
+  };
 
-    const updateProfile = () => {
-        try {
-            updateProfileData(updateData, token)
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    return (
+  return (
+    <>
+      <CustomInput
+        typeProp="text"
+        nameProp="name"
+        placeholderProp="name"
+        value={profileData.name}
+        isDisabled={!isEditing}
+        handlerProp={inputHandler}
+      />
+      <CustomInput
+        typeProp="email"
+        nameProp="email"
+        placeholderProp="email"
+        value={profileData.email}
+        isDisabled={!isEditing}
+        handlerProp={inputHandler}
+      />
+      <CustomInput
+        typeProp="text"
+        nameProp="role"
+        placeholderProp="role"
+        value={profileData.role}
+        isDisabled="disabled"
+        handlerProp={inputHandler}
+      />
+      {isEditing ? (
+        <div className="button-container">
+          <button onClick={() => updateProfileHandler()}>Guardar</button>
+          <button onClick={() => setIsEditing(false)}>Cancelar</button>
+        </div>
+      ) : (
         <>
-            <CustomInput
-            typeProp="name"
-            nameProp="name"
-            placeholderProp="name"
-            handlerProp={inputHandler} />
-            <CustomInput
-            typeProp="email"
-            nameProp="email"
-            placeholderProp="email"
-            handlerProp={inputHandler} />
-            <CustomInput
-            typeProp="lastname"
-            nameProp="lastname"
-            placeholderProp="lastname"
-            handlerProp={inputHandler} />
-            <p onClick={() => bringProfileHandler()}>Hola amigo, aquí un perfil</p>
+          <button onClick={() => setIsEditing(true)}>Modificar</button>
+          <BootstrapModal />
         </>
-    )
-}
+      )}
+    </>
+  );
+};

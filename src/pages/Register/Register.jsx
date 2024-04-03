@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import { registerNewUserCall } from "../../services/apiCalls";
 import "./Register.css";
+import { inputValidator } from "../../utils/validators";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -27,14 +28,19 @@ export const Register = () => {
   };
 
   const registerMe = async () => {
-    const answer = await registerNewUserCall(credentials);
+    if (inputValidator(credentials.name, "name") && inputValidator(credentials.password, "password")) {
+      const answer = await registerNewUserCall(credentials);
 
-    setMsg(answer.data.message);
+      setMsg(answer.data.message);
 
-    if(answer.data.success){
-        setTimeout(()=> {
-            navigate("/login")
-        }, 2000)
+      if (answer.data.success) {
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+      }
+    }
+    else {
+      console.log("credenciales incorrectas, algún campo no está bien introducido")
     }
   };
 
