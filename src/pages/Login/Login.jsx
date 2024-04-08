@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import "./Login.css";
 import { loginCall } from "../../services/apiCalls";
+import { useDispatch } from "react-redux";
+import { login } from "../userSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -13,8 +15,9 @@ export const Login = () => {
     email: "",
     password: "",
   });
-
   const [msg, setMsg] = useState("");
+
+  const dispatch = useDispatch()
 
   const inputHandler = (e) => {
     //genero la función que bindea
@@ -36,6 +39,8 @@ export const Login = () => {
         token: answer.data.token,
         decodificado: uDecodificado,
       };
+
+      dispatch(login(passport))
 
       console.log(passport);
       //Guardaríamos passport bien en RDX o session/localStorage si no disponemos del primero

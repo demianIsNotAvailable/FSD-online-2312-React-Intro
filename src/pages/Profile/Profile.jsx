@@ -3,6 +3,8 @@ import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { bringProfile } from "../../services/apiCalls";
 import { inputValidator } from "../../utils/validators";
 import BootstrapModal from "../../components/BootstrapModal/BootstrapModal";
+import { useSelector } from "react-redux";
+import { getUserData } from "../userSlice";
 
 export const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -11,10 +13,11 @@ export const Profile = () => {
     role: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState("");
 
-  const myPassport = JSON.parse(sessionStorage.getItem("passport"));
+  // const myPassport = JSON.parse(sessionStorage.getItem("passport"));
+
+  const myPassport = useSelector(getUserData)
   const token = myPassport.token;
 
   const inputHandler = (e) => {
