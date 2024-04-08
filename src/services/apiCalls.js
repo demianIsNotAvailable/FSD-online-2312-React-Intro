@@ -2,8 +2,8 @@ import axios from "axios";
 
 // const API_URL = "https://rickandmortyapi.com/api"
 const API_RM_URL = "https://rickandmortyapi.com/api";
-const API_URL = "http://localhost:27017/";
-// const API_URL = "aquí hay una url para un entorno de desarrollo"
+// const API_URL = "http://localhost:27017/";
+const API_URL = "https://fsdonline2312tes.vercel.app/"
 
 export const registerNewUserCall = async (credentials) => {
   return await axios.post(`${API_URL}user/`, credentials);
