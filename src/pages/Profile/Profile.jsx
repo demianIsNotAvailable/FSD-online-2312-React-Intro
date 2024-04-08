@@ -3,8 +3,8 @@ import { CustomInput } from "../../components/CustomInput/CustomInput";
 import { bringProfile } from "../../services/apiCalls";
 import { inputValidator } from "../../utils/validators";
 import BootstrapModal from "../../components/BootstrapModal/BootstrapModal";
-import { useSelector } from "react-redux";
-import { getUserData } from "../userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedAmount, getUserData, resetCount } from "../userSlice";
 
 export const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -15,8 +15,9 @@ export const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // const myPassport = JSON.parse(sessionStorage.getItem("passport"));
+  const dispatch = useDispatch()
 
+  const veces = useSelector(getLoggedAmount)
   const myPassport = useSelector(getUserData)
   const token = myPassport.token;
 
@@ -51,6 +52,10 @@ export const Profile = () => {
     }
   };
 
+  const resetLoggedCount = () => {
+    console.log(veces)
+  }
+
   return (
     <>
       <CustomInput
@@ -84,7 +89,7 @@ export const Profile = () => {
         </div>
       ) : (
         <>
-          <button onClick={() => setIsEditing(true)}>Modificar</button>
+          <button onClick={() => resetLoggedCount()}>Modificar</button>
           <BootstrapModal 
           profileData={profileData}
           inputHandler={inputHandler}

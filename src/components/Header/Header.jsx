@@ -6,28 +6,34 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import "./Header.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData, logout } from '../../pages/userSlice';
 
 function Header() {
     // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    const location = useLocation()
-    // console.log(location)
-    // console.log(location.pathname, "usted está aquí")
-    const myPassport = JSON.parse(sessionStorage.getItem("passport"));
+    // el header necesita poder acceder al almacén de redux tanto para leer datos de él,
+    // como para escribir ya que desde aquí se hace logout (y un logout es "escribir" unas credenciales vacías)
+
+    // modo escritura para usar con logout
+    const dispatch = useDispatch()
+
+    // modo lectura para recuperar los datos que retorna getUserData (en este caso de nuestro state => state.user,
+    // es decir, ve el almacén entero pero accede específicamente al pasillo de user)
+    const myPassport = useSelector(getUserData)
     const token = myPassport?.token;
+    console.log(myPassport)
 
     const logMeOut = () => {
-      const passport = {
-        token: "",
-        decodificado: "",
-      };
-      sessionStorage.setItem("passport", JSON.stringify(passport))
+      // llamamos al almacén para que nos haga un logout. Como sólo necesitamos vaciar las credenciales, no necesitamos pasar
+      // ningún argumento al logout y hemos hardcodeado las credenciales vacías en el propio reducer
+      dispatch(logout())
     }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/">Mi app de R&M</Navbar.Brand>
+        <Navbar.Brand href="/">Mi app de R&M {myPassport.vecesLogeado}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

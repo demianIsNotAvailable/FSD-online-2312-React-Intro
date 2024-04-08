@@ -17,6 +17,8 @@ export const Login = () => {
   });
   const [msg, setMsg] = useState("");
 
+  // el Login necesita guardar el token en el almacén de redux, así que necesita poder hacer uso
+  // del modo escritura. Instanciamos el dispatch
   const dispatch = useDispatch()
 
   const inputHandler = (e) => {
@@ -40,6 +42,8 @@ export const Login = () => {
         decodificado: uDecodificado,
       };
 
+      // llamamos al almacén de redux dándole la instrucción de que realice un login con nuestro passport.
+      // dentro de la función "login" de userSlice, ese passport se recibe a través del action.payload
       dispatch(login(passport))
 
       console.log(passport);
