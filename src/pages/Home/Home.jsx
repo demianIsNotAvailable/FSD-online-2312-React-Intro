@@ -8,7 +8,7 @@ export const Home = () => {
     password: ""
   });
 
-
+  console.log("close modal estuvo aquí")
 
   const inputHandler = (event) => {
     setCredentials((prevState) => ({

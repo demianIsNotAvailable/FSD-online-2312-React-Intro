@@ -23,6 +23,7 @@ export const bringProfile = async (token) => {
     }
   }
   const res = await axios.get(`${API_URL}user`, config)
+
   return res.data
 }
 
@@ -32,7 +33,9 @@ export const updateProfile = async (data, token) => {
       Authorization: `Bearer ${token}`
     }
   }
-  const res = await axios.put(`${API_URL}api/users/profile`, data, config)
+  const res = await axios.put(`${API_URL}user`, data, config)
+  console.log(res, "yo soy updateProfile")
+  return res
 }
 
 export const bringAllCharacters = async () => {

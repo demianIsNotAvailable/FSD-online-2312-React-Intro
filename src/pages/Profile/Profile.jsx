@@ -32,10 +32,6 @@ export const Profile = () => {
     fetchProfile();
   }, []);
 
-  useEffect(() => {
-    console.log(profileData, "bringProfile");
-  }, [profileData]);
-
   const updateProfileHandler = () => {
     if (
       !inputValidator(profileData.name, "name") ||
@@ -86,7 +82,10 @@ export const Profile = () => {
       ) : (
         <>
           <button onClick={() => setIsEditing(true)}>Modificar</button>
-          <BootstrapModal />
+          <BootstrapModal 
+          profileData={profileData}
+          inputHandler={inputHandler}
+          token={token}/>
         </>
       )}
     </>

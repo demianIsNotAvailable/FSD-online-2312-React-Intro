@@ -30,10 +30,10 @@ export const Register = () => {
   const registerMe = async () => {
     if (inputValidator(credentials.name, "name") && inputValidator(credentials.password, "password")) {
       const answer = await registerNewUserCall(credentials);
-
+      console.log(answer)
       setMsg(answer.data.message);
 
-      if (answer.data.success) {
+      if (answer.data.email) {
         setTimeout(() => {
           navigate("/login");
         }, 2000);

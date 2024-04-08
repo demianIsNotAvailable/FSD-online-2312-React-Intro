@@ -13,6 +13,16 @@ function Header() {
     const location = useLocation()
     // console.log(location)
     // console.log(location.pathname, "usted está aquí")
+    const myPassport = JSON.parse(sessionStorage.getItem("passport"));
+    const token = myPassport?.token;
+
+    const logMeOut = () => {
+      const passport = {
+        token: "",
+        decodificado: "",
+      };
+      sessionStorage.setItem("passport", JSON.stringify(passport))
+    }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -25,6 +35,13 @@ function Header() {
             <NavDropdown title="Despliégame!" id="basic-nav-dropdown">
               <NavDropdown.Item href="/characters" className={location.pathname === "/characters" ? "elementTest" : ""}>Characters</NavDropdown.Item>
               <NavDropdown.Divider />
+              {token ? (
+                <NavDropdown.Item onClick={() => logMeOut()}>
+                  Logout
+                </NavDropdown.Item>
+              ) : (
+                <p>no hay token</p>
+              )}
               <NavDropdown.Item href="/login" className={location.pathname === "/login" ? "elementTest" : ""}>
                 Login
               </NavDropdown.Item>

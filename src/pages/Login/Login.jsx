@@ -44,7 +44,7 @@ export const Login = () => {
       setMsg(`${uDecodificado.name}, bienvenid@ de nuevo.`);
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/profile");
       }, 3000);
     }
   };
