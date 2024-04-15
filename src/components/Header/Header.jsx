@@ -3,11 +3,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import "./Header.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData, logout } from '../../pages/userSlice';
+import { getUserData, logout } from '../../app/slices/userSlice';
 
 function Header() {
     // const [isLoggedIn, setIsLoggedIn] = useState(false)

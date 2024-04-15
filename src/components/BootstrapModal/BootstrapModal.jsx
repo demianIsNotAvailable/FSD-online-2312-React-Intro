@@ -13,10 +13,10 @@ function BootstrapModal({ profileData, inputHandler, token }) {
   const handleClose = () => {
     // doble navigate para forzar a recargar el perfil en caso de no querer actualizar los datos,
     // para que llame de nuevo a la API y los recupere.
-    navigate("/");
-    setTimeout(() => {
-      navigate("/profile");
-    });
+    // navigate("/");
+    // setTimeout(() => {
+    //   navigate("/profile");
+    // });
 
     console.log("close");
     setShow(false);

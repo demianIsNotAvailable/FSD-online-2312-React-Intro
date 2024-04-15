@@ -4,7 +4,7 @@ import { bringProfile } from "../../services/apiCalls";
 import { inputValidator } from "../../utils/validators";
 import BootstrapModal from "../../components/BootstrapModal/BootstrapModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoggedAmount, getUserData, resetCount } from "../userSlice";
+import { getLoggedAmount, getUserData } from "../../app/slices/userSlice";
 
 export const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -12,6 +12,7 @@ export const Profile = () => {
     email: "",
     role: "",
   });
+
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 

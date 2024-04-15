@@ -8,6 +8,8 @@ import store from "./app/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import persistStore from "redux-persist/es/persistStore.js";
 
+// instanciamos nuestro persistor, envolvemos App en un PersistGate y un Provider
+
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

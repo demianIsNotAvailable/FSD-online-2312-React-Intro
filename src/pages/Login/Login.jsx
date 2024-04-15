@@ -6,7 +6,7 @@ import { decodeToken } from "react-jwt";
 import "./Login.css";
 import { loginCall } from "../../services/apiCalls";
 import { useDispatch } from "react-redux";
-import { login } from "../userSlice";
+import { login } from "../../app/slices/userSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
