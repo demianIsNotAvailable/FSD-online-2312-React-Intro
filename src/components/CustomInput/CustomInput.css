@@ -12,3 +12,8 @@
     border-width: 0.2em;
     border-color: red
 }
+
+.error-message {
+    font-weight: bold;
+    color: red
+}

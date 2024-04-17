@@ -8,8 +8,7 @@ export const CustomInput = ({
   onBlurHandler,
   value,
   isDisabled,
-  isValidContent,
-  
+  errorText
 }) => {
   // props, properties, propiedades, se reciben como un objeto
 
@@ -17,7 +16,7 @@ export const CustomInput = ({
   return (
     <div className="custom-input-container">
       {/* el input recibe un booleano indicando si el contenido es válido, y muestra unas clases u otras */}
-      <input className={isValidContent ? "input-design" : "input-design input-error"}
+      <input className={ errorText === "" ? "input-design" : "input-design input-error"}
       type={typeProp}
       name={nameProp}
       placeholder={placeholderProp}
@@ -26,6 +25,7 @@ export const CustomInput = ({
       onChange={(e) => handlerProp(e)}
       onBlur={(e) => onBlurHandler(e)}
       />
+      <p className="error-message">{errorText}</p>
     </div>
   );
 };

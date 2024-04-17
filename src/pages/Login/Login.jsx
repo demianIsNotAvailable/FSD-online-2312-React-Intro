@@ -18,8 +18,8 @@ export const Login = () => {
   });
   // useState que lleva la cuenta del formato de los inputs y si el contenido es válido
   const [isValidContent, setIsValidContent] = useState({
-    email: true,
-    password: true
+    email: "",
+    password: ""
   });
   const [msg, setMsg] = useState("");
 
@@ -38,13 +38,13 @@ export const Login = () => {
 
   // función que valida el contenido de los inputs al quitarles focus y settea el estado de "isValidContent"
   // para saber si el input debe mostrar un mensajito de error
+
   const inputValidatorHandler = (e) => {
-    const isValid = inputValidator(e.target.value, e.target.name);
+    const errorMessage = inputValidator(e.target.value, e.target.name);
     setIsValidContent((prevState) => ({
       ...prevState,
-      [e.target.name]: isValid,
+      [e.target.name]: errorMessage,
     }))
-    console.log("is "+ e.target.value + " a valid " + e.target.name + "?", isValid);
   };
 
   const loginMe = async () => {
@@ -88,6 +88,7 @@ export const Login = () => {
 
             // función que se dispara al clickar fuera del input y valida el contenido
             onBlurHandler={(e) => inputValidatorHandler(e)}
+            errorText={isValidContent.email}
           />
           <CustomInput
             isValidContent={isValidContent.password}
@@ -96,6 +97,7 @@ export const Login = () => {
             handlerProp={(e) => inputHandler(e)}
             placeholderProp={"escribe el password"}
             onBlurHandler={(e) => inputValidatorHandler(e)}
+            errorText={isValidContent.password}
           />
           <ButtonC
             title={"log me!"}
