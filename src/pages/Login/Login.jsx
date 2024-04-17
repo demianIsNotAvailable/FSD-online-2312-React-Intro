@@ -7,6 +7,7 @@ import "./Login.css";
 import { loginCall } from "../../services/apiCalls";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/slices/userSlice";
+import { inputValidator } from "../../utils/validators";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -15,11 +16,16 @@ export const Login = () => {
     email: "",
     password: "",
   });
+  // useState que lleva la cuenta del formato de los inputs y si el contenido es válido
+  const [isValidContent, setIsValidContent] = useState({
+    email: true,
+    password: true
+  });
   const [msg, setMsg] = useState("");
 
   // el Login necesita guardar el token en el almacén de redux, así que necesita poder hacer uso
   // del modo escritura. Instanciamos el dispatch
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const inputHandler = (e) => {
     //genero la función que bindea
@@ -28,6 +34,17 @@ export const Login = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  // función que valida el contenido de los inputs al quitarles focus y settea el estado de "isValidContent"
+  // para saber si el input debe mostrar un mensajito de error
+  const inputValidatorHandler = (e) => {
+    const isValid = inputValidator(e.target.value, e.target.name);
+    setIsValidContent((prevState) => ({
+      ...prevState,
+      [e.target.name]: isValid,
+    }))
+    console.log("is "+ e.target.value + " a valid " + e.target.name + "?", isValid);
   };
 
   const loginMe = async () => {
@@ -44,12 +61,12 @@ export const Login = () => {
 
       // llamamos al almacén de redux dándole la instrucción de que realice un login con nuestro passport.
       // dentro de la función "login" de userSlice, ese passport se recibe a través del action.payload
-      dispatch(login(passport))
+      dispatch(login(passport));
 
       console.log(passport);
       //Guardaríamos passport bien en RDX o session/localStorage si no disponemos del primero
-      sessionStorage.setItem("passport", JSON.stringify(passport))
-      
+      sessionStorage.setItem("passport", JSON.stringify(passport));
+
       setMsg(`${uDecodificado.name}, bienvenid@ de nuevo.`);
 
       setTimeout(() => {
@@ -63,18 +80,23 @@ export const Login = () => {
       {msg === "" ? (
         <>
           <CustomInput
+            isValidContent={isValidContent.email}
             typeProp={"email"}
             nameProp={"email"}
             handlerProp={(e) => inputHandler(e)}
             placeholderProp={"escribe tu e-mail"}
+
+            // función que se dispara al clickar fuera del input y valida el contenido
+            onBlurHandler={(e) => inputValidatorHandler(e)}
           />
           <CustomInput
+            isValidContent={isValidContent.password}
             typeProp={"password"}
             nameProp={"password"}
             handlerProp={(e) => inputHandler(e)}
             placeholderProp={"escribe el password"}
+            onBlurHandler={(e) => inputValidatorHandler(e)}
           />
-
           <ButtonC
             title={"log me!"}
             className={"regularButtonClass"}

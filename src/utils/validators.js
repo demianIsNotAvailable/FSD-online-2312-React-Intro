@@ -1,12 +1,15 @@
 
-export const inputValidator = (input, field) => {
-    if (input === "") {
+export const inputValidator = (inputValue, inputName) => {
+    if (inputValue === "") {
         return false
     }
-    if ((field === "name" || field === "lastname") && typeof(input) === "string") {
+    if ((inputName === "name" || inputName === "lastname") && typeof(inputValue) === "string") {
         return true
     }
-    if (field === "password" && typeof(input) === "string" && input.length >= 6 && input.length <= 12) {
+    if (inputName === "password" && typeof(inputValue) === "string" && inputValue.length >= 6 && inputValue.length <= 12) {
+        return true
+    }
+    if (inputName === "email" && inputValue.includes("@") && inputValue.includes(".")) {
         return true
     }
 
