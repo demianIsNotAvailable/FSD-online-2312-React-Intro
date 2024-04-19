@@ -6,6 +6,7 @@ export const userSlice = createSlice({
     initialState: { // estado inicial del pasillo
         token: "",
         decodificado: {
+            role: "",
             name: "",
             email: "",
             id: ""
@@ -53,4 +54,7 @@ export const {login, logout, resetCount} = userSlice.actions
 // definimos y exportamos los métodos que nos permitirán venir al almacén a leer información
 export const getUserData = (state) => state.user
 export const getLoggedAmount = (state) => state.user.vecesLogeado
+
+// método que nos dice si el usuario logeado es admin o no para uso en rutas de admins
+export const amIAdmin =(state) => state.user.decodificado.role === "ADMIN"
 export default userSlice.reducer

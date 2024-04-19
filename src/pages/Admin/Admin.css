@@ -1,0 +1,25 @@
+.delete-button {
+    height: 1em;
+    width: 1em;
+    background-color: red;
+    border-radius: 50%;
+    margin-top: 0.2em;
+    margin-left: 1em;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.delete-button:hover {
+    cursor: crosshair;
+}
+
+.confirm-delete {
+    background-color: teal;
+}
+
+.display-none {
+    display: none;
+}

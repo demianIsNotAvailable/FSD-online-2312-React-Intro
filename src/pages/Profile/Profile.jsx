@@ -32,6 +32,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const myProfileData = await bringProfile(token);
+      console.log(myProfileData)
       setProfileData(myProfileData);
     };
     fetchProfile();

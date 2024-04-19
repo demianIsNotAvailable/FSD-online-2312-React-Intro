@@ -1,56 +1,47 @@
-import { useEffect, useState } from "react";
-import { CustomInput } from "../../components/CustomInput/CustomInput";
+import { loginCall } from "../../services/apiCalls";
+import { decodeToken } from "react-jwt";
+import { useDispatch } from "react-redux";
+import { login } from "../../app/slices/userSlice";
 
 export const Home = () => {
-  const [count, setCount] = useState(0);
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: ""
-  });
 
-  console.log("close modal estuvo aquí")
-
-  const inputHandler = (event) => {
-    setCredentials((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value
-    }));
+  // credenciales hardcodeadas para logear automáticamente con usuario y admin de prueba
+  const user = {
+    email: "patata@email.com",
+    password: "password",
+  };
+  const admin = {
+    email: "admin@admin.admin",
+    password: "password",
   };
 
-  // useEffects
-  useEffect(() => {}, [count]);
+  const dispatch = useDispatch()
 
-  useEffect(() => {
-    console.log(credentials);
-  }, [credentials]);
+  const loginMe = async (role) => {
+    console.log(role)
+    const answer = await loginCall(role);
+    if (answer.data.token) {
+      const uDecodificado = decodeToken(answer.data.token);
+      const passport = {
+        token: answer.data.token,
+        decodificado: uDecodificado,
+      };
+      dispatch(login(passport));
+      console.log(passport)
+    }
+  };
 
   return (
     <>
       <h1>SOY HOME</h1>
       <h1>Vite + React</h1>
       <h2>Este es el subtítulo</h2>
+
+      {/* botones de login automático con user y admin para no andar mareando */}
       <div className="card">
-        <button>Bring My Profile</button>
-        <h3>LOGIN</h3>
-        <CustomInput
-          typeProp="email"
-          nameProp="email"
-          placeholderProp="introduce tu email"
-          handlerProp={inputHandler}
-        />
-        <CustomInput
-          typeProp="password"
-          nameProp="password"
-          placeholderProp=""
-          handlerProp={inputHandler}
-        />
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button onClick={() => loginMe(user)}>Login as User</button>
+        <button onClick={() => loginMe(admin)}>Login as Admin</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 };

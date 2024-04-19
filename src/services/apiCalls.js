@@ -10,7 +10,7 @@ export const registerNewUserCall = async (credentials) => {
 };
 
 export const loginCall = async (credentials) => {
-  console.log(credentials)
+  console.log(credentials, "soy credentials en loginCall")
   const res = await axios.post(`${API_URL}user/login`, credentials);
   console.log(res)
   return res
@@ -23,7 +23,7 @@ export const bringProfile = async (token) => {
     }
   }
   const res = await axios.get(`${API_URL}user`, config)
-
+  console.log(res)
   return res.data
 }
 
@@ -50,6 +50,26 @@ export const bringCharacterById = async (id) => {
 
   return res.data;
 };
+
+export const bringAllUsersCall = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}` 
+    }
+  }
+
+  return axios.get(`${API_URL}user/find?limit=999`, config)
+
+}
+
+export const deleteUserById = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `adfshilasdfagf ${token}`
+    }
+  }
+  return axios.delete(`${API_URL}user/${id}`, config)
+}
 
 // .get("url", {headers})
 // .post("url", {body}, {headers})

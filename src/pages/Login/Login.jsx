@@ -19,8 +19,9 @@ export const Login = () => {
   // useState que lleva la cuenta del formato de los inputs y si el contenido es válido
   const [isValidContent, setIsValidContent] = useState({
     email: "",
-    password: ""
+    password: "",
   });
+  const [loginError, setLoginError] = useState("")
   const [msg, setMsg] = useState("");
 
   // el Login necesita guardar el token en el almacén de redux, así que necesita poder hacer uso
@@ -44,34 +45,44 @@ export const Login = () => {
     setIsValidContent((prevState) => ({
       ...prevState,
       [e.target.name]: errorMessage,
-    }))
+    }));
   };
 
   const loginMe = async () => {
-    //esta será la función que desencadenará el login...
-    const answer = await loginCall(credentials);
-    if (answer.data.token) {
-      //decodificamos el token...
-      const uDecodificado = decodeToken(answer.data.token);
+    try {
+      //esta será la función que desencadenará el login...
+      const answer = await loginCall(credentials);
+      if (answer.data.token) {
+        //decodificamos el token...
+        const uDecodificado = decodeToken(answer.data.token);
 
-      const passport = {
-        token: answer.data.token,
-        decodificado: uDecodificado,
-      };
+        const passport = {
+          token: answer.data.token,
+          decodificado: uDecodificado,
+        };
 
-      // llamamos al almacén de redux dándole la instrucción de que realice un login con nuestro passport.
-      // dentro de la función "login" de userSlice, ese passport se recibe a través del action.payload
-      dispatch(login(passport));
+        // llamamos al almacén de redux dándole la instrucción de que realice un login con nuestro passport.
+        // dentro de la función "login" de userSlice, ese passport se recibe a través del action.payload
+        dispatch(login(passport));
 
-      console.log(passport);
-      //Guardaríamos passport bien en RDX o session/localStorage si no disponemos del primero
-      sessionStorage.setItem("passport", JSON.stringify(passport));
+        console.log(passport);
+        //Guardaríamos passport bien en RDX o session/localStorage si no disponemos del primero
+        sessionStorage.setItem("passport", JSON.stringify(passport));
 
-      setMsg(`${uDecodificado.name}, bienvenid@ de nuevo.`);
+        setMsg(`${uDecodificado.name}, bienvenid@ de nuevo.`);
 
-      setTimeout(() => {
-        navigate("/profile");
-      }, 3000);
+        setTimeout(() => {
+          navigate("/profile");
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.code === "ERR_NETWORK") {
+        setLoginError("el servidor está caído")
+      }
+      else {
+        setLoginError(error.response.data.error)
+      }
     }
   };
 
@@ -85,7 +96,6 @@ export const Login = () => {
             nameProp={"email"}
             handlerProp={(e) => inputHandler(e)}
             placeholderProp={"escribe tu e-mail"}
-
             // función que se dispara al clickar fuera del input y valida el contenido
             onBlurHandler={(e) => inputValidatorHandler(e)}
             errorText={isValidContent.email}
@@ -104,6 +114,7 @@ export const Login = () => {
             className={"regularButtonClass"}
             functionEmit={loginMe}
           />
+          <h2>{loginError}</h2>
         </>
       ) : (
         <div>{msg}</div>

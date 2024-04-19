@@ -20,7 +20,6 @@ function Header() {
     // es decir, ve el almacén entero pero accede específicamente al pasillo de user)
     const myPassport = useSelector(getUserData)
     const token = myPassport?.token;
-    console.log(myPassport)
 
     const logMeOut = () => {
       // llamamos al almacén para que nos haga un logout. Como sólo necesitamos vaciar las credenciales, no necesitamos pasar

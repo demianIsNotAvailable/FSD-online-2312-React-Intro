@@ -15,7 +15,7 @@ export const CustomInput = ({
 
   return (
     <div className="custom-input-container">
-      {/* el input recibe un booleano indicando si el contenido es válido, y muestra unas clases u otras */}
+      {/* el input recibe un mensaje de error, que si está vacío no le añade la className de error */}
       <input className={ errorText === "" ? "input-design" : "input-design input-error"}
       type={typeProp}
       name={nameProp}
@@ -25,6 +25,7 @@ export const CustomInput = ({
       onChange={(e) => handlerProp(e)}
       onBlur={(e) => onBlurHandler(e)}
       />
+      {/* el párrafo recibe directamente el mensaje de error a mostrar desde el login */}
       <p className="error-message">{errorText}</p>
     </div>
   );
